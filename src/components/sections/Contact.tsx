@@ -30,6 +30,7 @@ export function Contact() {
 
     // Replace with your Web3Forms access key
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY_HERE";
+    console.log("Using Access Key:", accessKey ? "Loaded" : "Missing");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
