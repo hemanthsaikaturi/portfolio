@@ -34,8 +34,7 @@ const projects = [
     description: "Re-engineered and deployed the official IEEE - VBIT Student Branch website to improve scalability, responsiveness, and overall website performance. Implemented Technical SEO enhancements and achieved Lighthouse performance score of 92.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "PHP", "MySQL"],
     links: {
-      live: "https://ieeevbitsb.in/",
-      admin: "https://queryviewer.ieeevbitsb.in/"
+      live: "https://ieeevbitsb.in/"
     }
   },
   {
@@ -117,13 +116,6 @@ export function Projects() {
                     <Button size="sm" variant="default" asChild className="gap-2">
                       <Link href={project.links.live} target="_blank">
                         <ExternalLink className="w-4 h-4" /> Live Site
-                      </Link>
-                    </Button>
-                  )}
-                  {project.links.admin && (
-                    <Button size="sm" variant="outline" asChild className="gap-2">
-                      <Link href={project.links.admin} target="_blank">
-                        Admin Panel
                       </Link>
                     </Button>
                   )}
