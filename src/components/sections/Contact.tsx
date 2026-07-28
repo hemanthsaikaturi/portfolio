@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Download, Mail, Send, CheckCircle2, AlertCircle } from "lucide-react";
-import { Github, Linkedin } from "@/components/icons";
+import { Github, Linkedin, Twitter } from "@/components/icons";
+import { FloatingShapes } from "@/components/FloatingShapes";
+import { ContactMascot } from "@/components/ContactMascot";
 import Link from "next/link";
 
 export function Contact() {
@@ -49,8 +51,9 @@ export function Contact() {
   const labelClass = "block font-display font-bold text-sm mb-1.5 uppercase tracking-wide";
 
   return (
-    <section id="contact" className="py-24 bg-background border-t-2 border-border">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="contact" className="relative py-24 bg-background border-t-2 border-border overflow-hidden">
+      <FloatingShapes />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -138,8 +141,9 @@ export function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.4, delay: 0.2 }}
+            className="relative mt-16 lg:mt-0 lg:pt-16"
           >
-            <div className="brutalist-card bg-card p-8">
+            <div className="brutalist-card bg-card p-8 relative z-10">
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
@@ -205,6 +209,11 @@ export function Contact() {
                   )}
                 </button>
               </form>
+            </div>
+            
+            {/* Cute Mascot popping out of the top of the form */}
+            <div className="hidden md:flex absolute -top-40 right-10 z-0">
+              <ContactMascot />
             </div>
           </motion.div>
         </div>

@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import { FloatingShapes } from "@/components/FloatingShapes";
 
 const projects = [
   {
@@ -50,12 +52,22 @@ const projects = [
     label: null,
     links: { live: "https://registration.ieeevbitsb.in/" },
   },
+  {
+    num: "06",
+    title: "UI-Bucket",
+    description:
+      "A comprehensive UI component repository featuring live interactive previews, multi-format source inspection (React/HTML/CSS), and zero-install code exports. Built to provide developers with a curated archive of high-quality, stylistically diverse UI components.",
+    tech: ["React", "TypeScript", "GSAP", "Three.js", "Vite"],
+    label: "Upcoming",
+    links: {},
+  },
 ];
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 bg-background">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="projects" className="relative py-24 bg-background overflow-hidden">
+      <FloatingShapes />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -91,7 +103,11 @@ export function Projects() {
                   <span className="font-display font-extrabold text-4xl text-border/30 leading-none select-none">
                     {project.num}
                   </span>
-                  {project.label && (
+                  {project.label === "IEEE Published" ? (
+                    <div className="flex items-center bg-white px-2 py-1 border-2 border-border shadow-[2px_2px_0_0_rgba(0,0,0,1)] dark:shadow-[2px_2px_0_0_rgba(255,255,255,1)]">
+                      <Image src="/ieee-logo.svg" alt="IEEE Published" width={120} height={36} className="h-8 w-auto object-contain" />
+                    </div>
+                  ) : project.label && (
                     <span className="accent-box text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-0.5">
                       {project.label}
                     </span>

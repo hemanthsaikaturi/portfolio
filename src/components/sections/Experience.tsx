@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
+import { FloatingShapes } from "@/components/FloatingShapes";
+import { BrutalistMascot } from "@/components/BrutalistMascot";
 
 const experiences = [
   {
@@ -55,8 +57,9 @@ const experiences = [
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24 bg-muted/40 border-y-2 border-border">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="experience" className="relative py-24 bg-muted/40 border-y-2 border-border overflow-hidden">
+      <FloatingShapes />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,8 +76,9 @@ export function Experience() {
           </h2>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative max-w-3xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative">
+          {/* Timeline */}
+          <div className="relative lg:col-span-8 max-w-3xl">
           {/* Vertical line */}
           <div className="absolute left-[17px] top-2 bottom-2 w-0.5 bg-border hidden md:block" />
 
@@ -140,6 +144,12 @@ export function Experience() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+
+          {/* Right column mascot */}
+          <div className="hidden lg:flex lg:col-span-4 relative justify-center items-start pt-[450px]">
+            <BrutalistMascot />
           </div>
         </div>
       </div>

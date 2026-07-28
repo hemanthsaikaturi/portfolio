@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ParticleField } from "@/components/ParticleField";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Hemanthsai Katuri | Full Stack Developer & Embedded Systems Engineer",
   description:
-    "Portfolio of Hemanthsai Katuri, Full Stack Developer, Embedded Systems Engineer, and FPGA Enthusiast. Building scalable web platforms and hardware-software co-designed systems.",
+    "Portfolio of Hemanthsai Katuri, Full Stack Developer. Building scalable web platforms and hardware-software co-designed systems.",
   openGraph: {
     title: "Hemanthsai Katuri | Portfolio",
     description: "Full Stack Developer, Embedded Systems Engineer & FPGA Enthusiast.",
@@ -61,8 +62,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <ParticleField />
           <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

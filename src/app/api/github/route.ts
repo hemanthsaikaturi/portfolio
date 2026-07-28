@@ -49,7 +49,7 @@ export async function GET() {
       headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 
-    const [userRes, reposRes] = await Promise.all([
+    const [userRes, reposRes, orgsRes] = await Promise.all([
       fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
         headers,
         next: { revalidate: 3600 },
@@ -58,6 +58,10 @@ export async function GET() {
         `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`,
         { headers, next: { revalidate: 3600 } }
       ),
+      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/orgs`, {
+        headers,
+        next: { revalidate: 3600 },
+      }),
     ]);
 
     if (!userRes.ok) {
@@ -66,11 +70,20 @@ export async function GET() {
 
     const user = await userRes.json();
     const repos = await reposRes.json();
+    const orgs = orgsRes.ok ? await orgsRes.json() : [];
 
     const totalForks = Array.isArray(repos)
       ? repos.reduce(
           (acc: number, repo: { forks_count: number }) =>
             acc + repo.forks_count,
+          0
+        )
+      : 0;
+
+    const totalStars = Array.isArray(repos)
+      ? repos.reduce(
+          (acc: number, repo: { stargazers_count: number }) =>
+            acc + repo.stargazers_count,
           0
         )
       : 0;
@@ -85,10 +98,21 @@ export async function GET() {
       following: user.following ?? 0,
       public_repos: user.public_repos ?? 0,
       totalForks,
+      totalStars,
       totalCommits: contributions.commits,
       totalPRs: contributions.prs,
       avatar_url: user.avatar_url ?? "",
       name: user.name ?? GITHUB_USERNAME,
+      login: user.login ?? GITHUB_USERNAME,
+      bio: user.bio ?? "",
+      company: user.company ?? "",
+      blog: user.blog ?? "",
+      location: user.location ?? "",
+      organizations: orgs.map((org: any) => ({
+        login: org.login,
+        avatar_url: org.avatar_url,
+        description: org.description,
+      })),
     });
   } catch (error) {
     console.error("GitHub API fetch error:", error);

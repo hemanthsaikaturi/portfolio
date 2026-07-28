@@ -6,6 +6,7 @@ import { useTheme } from "next-themes";
 interface Particle {
   x: number;
   y: number;
+  z: number;
   hx: number;
   hy: number;
   vx: number;
@@ -16,49 +17,68 @@ interface Particle {
   rot: number;
   baseRot: number;
   rotV: number;
+  scale: number;
+  targetScale: number;
 }
 
 // Physics tuning for extremely smooth cursor repulsion
-const REPULSION_RADIUS = 200;
-const REPULSION_STRENGTH = 1.5;
-const SPRING = 0.05;
-const DAMPING = 0.85;
+const REPULSION_RADIUS = 400;   // Increased so it reacts from further away
+const REPULSION_STRENGTH = 1.8; // Increased for more sensitive push
+const SPRING = 0.015;           // Lowered for slower return
+const DAMPING = 0.92;           // Increased for buttery glide
 
-function createPhyllotaxisParticles(
+const GOOGLE_COLORS = [
+  "#4285F4", // Blue
+  "#00ACC1", // Cyan
+  "#34A853", // Green
+  "#FBBC05", // Yellow
+  "#FF6D00", // Orange
+  "#EA4335", // Red
+  "#8E24AA", // Purple
+];
+
+function createFibonacciSphere(
   w: number,
   h: number,
-  colors: string[]
 ): Particle[] {
   const particles: Particle[] = [];
-  const centerX = w / 2;
-  const centerY = h / 2;
+  // Center of the sphere
+  const centerX = w * 0.5;
+  const centerY = h * 0.5;
   
-  // Phyllotaxis (sunflower) parameters
-  // To cover the screen, we need enough particles based on the radius
-  const maxRadius = Math.max(w, h) * 0.6; 
-  const c = 22; // spread factor
-  const n = Math.floor((maxRadius / c) ** 2); // number of particles to fill radius
+  // Radius of the globe
+  const radius = Math.max(w, h) * 0.6; // Spread much wider
+  const N = 1200; // Increased particle count for wider sphere
+  const phi = Math.PI * (3 - Math.sqrt(5)); // Golden angle
 
-  const goldenAngle = 2.39996323; // ~137.5 degrees in radians
-
-  for (let i = 0; i < n; i++) {
-    const r = c * Math.sqrt(i);
-    const theta = i * goldenAngle;
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i / (N - 1)) * 2; // y goes from 1 to -1
+    const r = Math.sqrt(1 - y * y); // radius at y
+    const theta = phi * i;
     
-    const hx = centerX + r * Math.cos(theta);
-    const hy = centerY + r * Math.sin(theta);
+    const x = Math.cos(theta) * r;
+    const z = Math.sin(theta) * r;
     
-    // Dash rotation perpendicular to radius
-    const baseRot = theta + Math.PI / 2;
+    // Project 3D coordinates to 2D screen
+    const px = centerX + x * radius;
+    const py = centerY + y * radius;
+    
+    // Base rotation - tangential to the sphere surface
+    // Looking at the antigravity reference, dashes rotate along the curve
+    const baseRot = Math.atan2(y, x) + Math.PI / 2;
 
-    // Gradient-like color selection based on distance from center (optional) or random
-    const color = colors[Math.floor(Math.random() * colors.length)];
+    // Color gradient mapping based on X and Y position (diagonal gradient)
+    // Map x and y from [-1, 1] to a color index
+    const gradientVal = (x - y + 2) / 4; // 0 to 1
+    const colorIndex = Math.floor(gradientVal * GOOGLE_COLORS.length);
+    const color = GOOGLE_COLORS[Math.max(0, Math.min(GOOGLE_COLORS.length - 1, colorIndex))];
 
     particles.push({
-      x: hx,
-      y: hy,
-      hx,
-      hy,
+      x: px,
+      y: py,
+      z,
+      hx: px,
+      hy: py,
       vx: 0,
       vy: 0,
       color,
@@ -67,6 +87,8 @@ function createPhyllotaxisParticles(
       rot: baseRot,
       baseRot,
       rotV: 0,
+      scale: 1,
+      targetScale: 1,
     });
   }
   return particles;
@@ -91,33 +113,29 @@ export function ParticleField() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const isDark = resolvedTheme === "dark";
-
-    // Brutalist palette
-    const lightColors = ["#FACC15", "#111111", "#444444", "#D4A017", "#888888"];
-    const darkColors = ["#FACC15", "#ffffff", "#aaaaaa", "#FFE066", "#777777"];
-    const colors = isDark ? darkColors : lightColors;
-
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      particles.current = createPhyllotaxisParticles(canvas.width, canvas.height, colors);
+      // Get the parent container's dimensions instead of window to stay contained in Hero
+      const parent = canvas.parentElement;
+      if (parent) {
+        canvas.width = parent.clientWidth;
+        canvas.height = parent.clientHeight;
+        particles.current = createFibonacciSphere(canvas.width, canvas.height);
+      }
     };
 
     resize();
     window.addEventListener("resize", resize);
 
     const onMouseMove = (e: MouseEvent) => {
-      // Target mouse position
-      mouse.current.tx = e.clientX;
-      mouse.current.ty = e.clientY;
+      const rect = canvas.getBoundingClientRect();
+      mouse.current.tx = e.clientX - rect.left;
+      mouse.current.ty = e.clientY - rect.top;
     };
     const onMouseLeave = () => {
       mouse.current.tx = -999;
       mouse.current.ty = -999;
     };
 
-    // If mouse starts offscreen, initialize smoothly
     mouse.current.x = mouse.current.tx;
     mouse.current.y = mouse.current.ty;
 
@@ -127,54 +145,73 @@ export function ParticleField() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Interpolate mouse position for buttery smooth tracking
+      // Smooth mouse interpolation (slower tracking for softer feel)
       if (mouse.current.tx !== -999) {
-        mouse.current.x += (mouse.current.tx - mouse.current.x) * 0.15;
-        mouse.current.y += (mouse.current.ty - mouse.current.y) * 0.15;
+        mouse.current.x += (mouse.current.tx - mouse.current.x) * 0.08;
+        mouse.current.y += (mouse.current.ty - mouse.current.y) * 0.08;
       } else {
         mouse.current.x = -999;
         mouse.current.y = -999;
       }
 
-      for (const p of particles.current) {
+      // Sort particles by Z so front ones draw on top of back ones
+      const sortedParticles = [...particles.current].sort((a, b) => a.z - b.z);
+
+      for (const p of sortedParticles) {
         const dx = p.x - mouse.current.x;
         const dy = p.y - mouse.current.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
+        // Reset target scale
+        p.targetScale = 1;
+
         // Repulsion force
         if (dist < REPULSION_RADIUS && mouse.current.x !== -999) {
-          const force = ((REPULSION_RADIUS - dist) / REPULSION_RADIUS) ** 2;
+          // Linear falloff feels smoother than exponential
+          const force = (REPULSION_RADIUS - dist) / REPULSION_RADIUS;
           const angle = Math.atan2(dy, dx);
+          
           p.vx += Math.cos(angle) * force * REPULSION_STRENGTH;
           p.vy += Math.sin(angle) * force * REPULSION_STRENGTH;
+          p.rotV += force * 0.03; // Gentle rotation twist
           
-          // Spin dash slightly on repel
-          p.rotV += force * 0.05;
+          // Particles swell up beautifully when pushed
+          p.targetScale = 1 + force * 2.0; 
         }
 
-        // Spring back to home position
+        // Smoothly animate scale
+        p.scale += (p.targetScale - p.scale) * 0.08;
+
         p.vx += (p.hx - p.x) * SPRING;
         p.vy += (p.hy - p.y) * SPRING;
-
-        // Damping (friction)
         p.vx *= DAMPING;
         p.vy *= DAMPING;
-
-        // Apply velocity
         p.x += p.vx;
         p.y += p.vy;
 
-        // Spring rotation back to base tangential rotation
         p.rotV += (p.baseRot - p.rot) * (SPRING * 1.5);
         p.rotV *= DAMPING;
         p.rot += p.rotV;
 
-        // Draw dash
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(p.rot);
+        
+        // Fading for particles on the "back" of the 3D sphere
+        const alpha = p.z > 0 ? 0.9 : 0.25;
+        ctx.globalAlpha = alpha;
+        
+        // Combine Z depth scale with interactive mouse scale
+        const depthScale = p.z > 0 ? 1 : 0.6;
+        
+        // Organic breathing animation (wave pattern using time and spatial position)
+        const time = Date.now() / 1000;
+        const breatheScale = 1 + Math.sin(time * 1.5 + (p.hx + p.hy) * 0.02) * 0.5; // Scales between 0.5 and 1.5
+        
+        const finalScale = depthScale * p.scale * breatheScale;
+        ctx.scale(finalScale, finalScale);
+
         ctx.fillStyle = p.color;
-        // Draw slightly rounded dashes
         ctx.beginPath();
         ctx.roundRect(-p.w / 2, -p.h / 2, p.w, p.h, 2);
         ctx.fill();
@@ -200,8 +237,8 @@ export function ParticleField() {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 0, opacity: resolvedTheme === "dark" ? 0.35 : 0.65 }}
+      className="absolute inset-0 pointer-events-auto"
+      style={{ zIndex: 0 }}
     />
   );
 }

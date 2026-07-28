@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FloatingShapes } from "@/components/FloatingShapes";
 import { Code2, Database, Cpu, Wrench, Palette, Terminal, Bot } from "lucide-react";
 
 const skillCategories = [
@@ -60,8 +61,9 @@ const tagVariants = {
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 bg-muted/40 border-y-2 border-border">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="skills" className="relative py-24 bg-muted/40 border-y-2 border-border overflow-hidden">
+      <FloatingShapes />
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

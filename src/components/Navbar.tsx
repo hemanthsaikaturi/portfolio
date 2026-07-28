@@ -10,12 +10,12 @@ import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 
 const navItems = [
-  { name: "Home", href: "#home" },
-  { name: "Projects", href: "#projects" },
-  { name: "Skills", href: "#skills" },
-  { name: "Experience", href: "#experience" },
-  { name: "Publications", href: "#publications" },
-  { name: "GitHub", href: "#github" },
+  { name: "Home", href: "/#home" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Experience", href: "/#experience" },
+  { name: "Publications", href: "/#publications" },
+  { name: "GitHub", href: "/#github" },
 ];
 
 export function Navbar() {
@@ -47,7 +47,7 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-8 h-14 flex items-center justify-between">
         {/* Logo — brutalist mark */}
         <Link
-          href="#home"
+          href="/#home"
           className="text-xl font-display font-bold tracking-tighter border-2 border-border px-3 py-0.5 hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors duration-150"
         >
           HK
