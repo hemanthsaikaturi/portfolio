@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ParticleField } from "@/components/ParticleField";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Hemanthsai Katuri | Full Stack Developer & Embedded Systems Engineer",
-  description: "Portfolio of Hemanthsai Katuri, Full Stack Developer, Embedded Systems Engineer, and FPGA Enthusiast. Building scalable web platforms and hardware-software co-designed systems.",
+  description:
+    "Portfolio of Hemanthsai Katuri, Full Stack Developer, Embedded Systems Engineer, and FPGA Enthusiast. Building scalable web platforms and hardware-software co-designed systems.",
   openGraph: {
     title: "Hemanthsai Katuri | Portfolio",
     description: "Full Stack Developer, Embedded Systems Engineer & FPGA Enthusiast.",
-    url: "https://hemanthsai.dev", // Placeholder
+    url: "https://www.hemanthsaiwork.me/",
     siteName: "Hemanthsai Katuri Portfolio",
     locale: "en_US",
     type: "website",
@@ -40,17 +48,21 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} font-sans h-full antialiased dark`}
+      className={`${inter.variable} ${spaceGrotesk.variable} font-sans h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground" suppressHydrationWarning>
+      <body
+        className="min-h-full flex flex-col bg-background text-foreground"
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          forcedTheme="dark"
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <ParticleField />
+          <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
         </ThemeProvider>
       </body>
     </html>

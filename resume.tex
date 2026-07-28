@@ -1,0 +1,320 @@
+%-------------------------
+% Resume in Latex
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\setlength{\footskip}{4.08003pt}
+\usepackage{tabularx}
+\input{glyphtounicode}
+\usepackage{lmodern}
+\usepackage{needspace}
+\usepackage{fontawesome5}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.65in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Line spacing - slightly more open
+\linespread{1.05}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-2pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-4pt}]
+
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-1pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \textbf{#1} & #2 \\
+    \textit{\small#3} & \textit{\small #4} \\
+  \end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+  \needspace{4\baselineskip}
+  \item
+  \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+    \small#1 & #2 \\
+  \end{tabular*}\vspace{-6pt}
+}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+
+\newcommand{\resumeItemListStart}{\begin{itemize}[topsep=2pt, itemsep=1pt, parsep=0pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+
+%-------------------------------------------
+%%%%%% RESUME STARTS HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+
+\begin{center}
+{\Huge \bfseries Hemanthsai Katuri} \\ \vspace{4pt}
+
+\small
+\faPhone\ +91 6302613902 $|$
+\href{mailto:hemanthsaiworks@gmail.com}{\faEnvelope\ \underline{hemanthsaiworks@gmail.com}} $|$
+\href{https://www.linkedin.com/in/hemanthsaikaturi/}{\faLinkedin\ \underline{hemanthsaikaturi}} $|$
+\href{https://github.com/hemanthsaikaturi}{\faGithub\ \underline{hemanthsaikaturi}} $|$
+\href{https://www.hemanthsaiwork.me/}{\faGlobe\ \underline{hemanthsaiwork.me}}
+
+\end{center}
+
+%-----------EDUCATION-----------
+
+\section{Education}
+
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{Vignana Bharathi Institute of Technology}{Hyderabad, Telangana}
+{Bachelor of Technology in Electronics and Communication Engineering}{2022 -- 2026}
+
+\resumeSubHeadingListEnd
+
+%-----------PROFESSIONAL SUMMARY-----------
+
+\section{Professional Summary}
+
+\small{
+Electronics and Communication Engineering undergraduate with experience in full-stack development, embedded systems, FPGA-based acceleration and scalable web platforms. Skilled in React.js, Next.js, Firebase, PostgreSQL and hardware-software co-design. Experienced in developing production-ready platforms, embedded architectures and research-oriented engineering solutions with strong problem-solving and performance optimization capabilities.
+}
+
+\vspace{-4pt}
+
+%-----------TECHNICAL SKILLS-----------
+
+\section{Technical Skills}
+
+\begin{itemize}[leftmargin=0.15in, label={}]
+\small{\item{
+
+\textbf{Languages}{: JavaScript, TypeScript, Python, C/C++, Verilog, HTML5, CSS3} \\[2pt]
+
+\textbf{Frontend}{: React.js, Next.js, Tailwind CSS, Framer Motion} \\[2pt]
+
+\textbf{Backend \& Databases}{: Firebase, Supabase, PostgreSQL, PHP, MySQL, REST APIs, Node.js} \\[2pt]
+
+\textbf{Embedded}{: MCUs, MPUs, Arduino, ATmega328P, Communication Interfaces, FPGA Acceleration} \\[2pt]
+
+\textbf{UI/UX \& Design}{: Figma, Responsive Design Principles, User Interface Design} \\[2pt]
+
+\textbf{Tools \& Platforms}{: Git, GitHub, Vercel, VS Code, Arduino IDE, Google Apps Script, Xilinx Vitis HLS, GCC, Linux Server Administration, cPanel, phpMyAdmin} \\[2pt]
+
+\textbf{AI \& Tools}{: GitHub Copilot, ChatGPT, Claude, Cursor, Gemini, Prompt Engineering, LLM-Assisted Development} \\[2pt]
+
+\textbf{Concepts}{: Full Stack Development, Authentication, Technical SEO, Performance Optimization, Hardware-Software Co-Design} \\[2pt]
+
+\textbf{Professional Skills}{: Problem Solving, Analytical Thinking, Team Collaboration, Technical Documentation, System Design Thinking} \\
+
+}}
+\end{itemize}
+
+%-----------EXPERIENCE-----------
+
+\section{Experience}
+
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{PersonaOn $|$ Product Engineer Intern}{May 2026 -- Present}
+{Remote}{}
+
+\resumeItemListStart
+
+\resumeItem{Developed and improved product features across the frontend and backend based on business requirements, user feedback, and product priorities.}
+
+\resumeItem{Wrote clean, maintainable, and efficient code for full-stack tasks while fixing bugs and resolving technical issues to improve product stability and usability.}
+
+\resumeItem{Collaborated with the product team to clarify feature requirements and behavior, provide technical input on feasibility and trade-offs, and support timely delivery.}
+
+\resumeItem{Tested features prior to release to ensure quality and reliability, and documented completed work, known issues, and implementation notes for team reference.}
+
+\resumeItemListEnd
+
+\resumeSubheading
+{IEEE -- VBIT Student Branch $|$ Web Master}{July 2025 -- Present}
+{Hyderabad, Telangana}{}
+
+\resumeItemListStart
+
+\resumeItem{Re-engineered and deployed the official IEEE - VBIT Student Branch website using Next.js, TypeScript, and Tailwind CSS to improve scalability, responsiveness, and overall website performance.}
+
+\resumeItem{Engineered a secure PHP/MySQL admin dashboard for handling website feedback and query management with authentication and automated email routing.}
+
+\resumeItem{Improved Core Web Vitals and mobile responsiveness through optimized rendering strategies, lazy loading, and performance-focused frontend enhancements, achieving a Lighthouse performance score of 92.}
+
+\resumeItem{Implemented Technical SEO enhancements including structured metadata, sitemap optimization and dynamic OpenGraph integration for improved search visibility.}
+
+\resumeItemListEnd
+
+\resumeSubheading
+{IEEE -- VBIT Student Branch $|$ Web Designer}{July 2024 -- July 2025}
+{Hyderabad, Telangana}{}
+
+\resumeItemListStart
+
+\resumeItem{Developed and maintained dynamic event registration platforms using JavaScript and Firebase, automating event management workflows for the student branch.}
+
+\resumeItem{Built secure admin dashboards enabling non-technical members to create and manage events, registrations and payment workflows in real-time.}
+
+\resumeItem{Integrated Razorpay payment gateway and automated registration data exports to Google Sheets using Google Apps Script.}
+
+\resumeItem{Designed and deployed interactive competition websites with multi-level progression systems and real-time validation using Cloud Firestore.}
+
+\resumeItemListEnd
+
+\resumeSubheading
+{IEEE Robotics and Automation Society}{March 2025 -- April 2025}
+{Virtual Internship --- Research Methodology, Embedded Systems \& IoT}{}
+
+\resumeItemListStart
+
+\resumeItem{Completed a 5-week virtual internship focused on Research Methodology, 3D Modelling, Embedded Systems and IoT under IEEE Robotics and Automation Society (RAS) Hyderabad Section.}
+
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+
+\section{Projects}
+
+\resumeSubHeadingListStart
+
+\resumeProjectHeading
+{\textbf{Hybrid Genetic Algorithm Framework for FPGA CNN Accelerators} $|$ \emph{Xilinx Vitis HLS, CNN, GA}}{}
+
+\resumeItemListStart
+
+\resumeItem{Developed a memory-aware optimization framework for FPGA-based CNN accelerators using Hybrid Genetic Algorithms and HLS directives.}
+
+\resumeItem{Implemented parameterized MAC-array and Conv2D accelerator models to analyze compute-memory trade-offs.}
+
+\resumeItem{Automated synthesis evaluation workflows for latency, DSP, LUT, BRAM and timing analysis in FPGA accelerator configurations.}
+
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Learnable Universal Remote Architecture} $|$ \emph{ATmega328P, Arduino, EEPROM, IRremote}}{}
+
+\resumeItemListStart
+
+\resumeItem{Designed and implemented a programmable universal IR remote supporting both standard and unknown IR protocols using ATmega328P.}
+
+\resumeItem{Implemented EEPROM-based persistent storage for learned IR commands with support for NEC and raw signal decoding.}
+
+\resumeItem{Developed a standalone hardware interface with runtime mode switching and dynamic IR learning capabilities.}
+
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Dynamic Event Registration Portal} $|$ \emph{JavaScript, Firebase, Razorpay, Google Apps Script} $|$ \href{https://registration.ieeevbitsb.in/}{\underline{Live}}}{}
+
+\resumeItemListStart
+
+\resumeItem{Developed a full-stack event registration system with real-time event management and payment integration for IEEE SB activities.}
+
+\resumeItem{Built secure Firebase-based admin panels supporting custom registration forms and automated attendee management.}
+
+\resumeItem{Integrated Razorpay payment gateway and automated Firestore-to-Google Sheets data synchronization workflows.}
+
+\resumeItemListEnd
+
+\resumeProjectHeading
+{\textbf{Svadhyay LMS} $|$ \emph{Next.js, React, Tailwind CSS, Supabase, PostgreSQL} $|$ \href{https://svadhyay.ieeevbitsb.in/}{\underline{Live}}}{}
+
+\resumeItemListStart
+
+\resumeItem{Architected and developed a custom Learning Management System serving 390+ students with role-based dashboards for administrators and learners.}
+
+\resumeItem{Implemented secure authentication and database management using Supabase with PostgreSQL-backed access control.}
+
+\resumeItem{Engineered automated PDF certificate generation and scalable email notification systems for course workflows.}
+
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+%-----------PUBLICATIONS & ACHIEVEMENTS-----------
+
+\section{Publications \& Achievements}
+
+\resumeSubHeadingListStart
+
+%----------PUBLICATION----------
+
+\resumeProjectHeading
+{\parbox{0.82\textwidth}{
+\small\textbf{``A Low-Cost, Learnable Universal Remote Architecture with Persistent Storage for\\
+Unknown IR Protocols''}
+}}{2025}
+
+\resumeItemListStart
+
+\resumeItem{Published in IEEE Xplore. Proposed a cost-effective embedded system using ATmega328P with on-device learning and persistent storage for handling standard and unknown IR protocols.}
+
+\resumeItem{\href{https://ieeexplore.ieee.org/document/11448777}{\underline{IEEE Xplore Publication Link}}}
+
+\resumeItemListEnd
+
+\vspace{-2pt}
+
+%----------ACHIEVEMENTS----------
+
+\resumeProjectHeading
+{\textbf{Achievements}}{}
+
+\resumeItemListStart
+
+\resumeItem{Secured \textbf{Global Rank 1848}, \textbf{Region 10 Rank 1048} and \textbf{University Rank 3} in \textbf{IEEEXtreme 18.0} as part of team \textbf{IEEEVBITSB9} in the international 24-hour competitive programming challenge organized by IEEE.}
+
+\resumeItem{Awarded \textbf{First Prize} in \textbf{AAKAR--2026} organized by the Research and Development Cell, Vignana Bharathi Institute of Technology, for technical project innovation and presentation excellence.}
+
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+
+\end{document}

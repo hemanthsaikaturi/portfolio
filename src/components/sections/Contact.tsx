@@ -4,11 +4,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Download, Mail, Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { Github, Linkedin } from "@/components/icons";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Label } from "../ui/label";
 import Link from "next/link";
 
 export function Contact() {
@@ -16,35 +11,24 @@ export function Contact() {
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
-
-    // Replace with your Web3Forms access key
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_WEB3FORMS_ACCESS_KEY_HERE";
-    console.log("Using Access Key:", accessKey ? "Loaded" : "Missing");
-
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: accessKey,
-          ...formData,
-        }),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ access_key: accessKey, ...formData }),
       });
-
       const result = await response.json();
       if (result.success) {
         setStatus("success");
@@ -54,158 +38,174 @@ export function Contact() {
         setStatus("error");
         setTimeout(() => setStatus("idle"), 5000);
       }
-    } catch (error) {
-      console.error(error);
+    } catch {
       setStatus("error");
       setTimeout(() => setStatus("idle"), 5000);
     }
   };
 
+  const inputClass =
+    "w-full px-4 py-3 bg-background border-2 border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-0 transition-colors duration-150 font-mono text-sm rounded-none";
+  const labelClass = "block font-display font-bold text-sm mb-1.5 uppercase tracking-wide";
+
   return (
-    <section id="contact" className="py-24 relative">
+    <section id="contact" className="py-24 bg-background border-t-2 border-border">
       <div className="container mx-auto px-4 md:px-8">
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Get In Touch</h2>
-          <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>
-          <p className="text-muted-foreground max-w-2xl">
-            Whether you have a question, a project proposal, or just want to say hi, my inbox is always open. I'll try my best to get back to you!
+          <span className="font-mono text-xs font-bold tracking-widest uppercase text-muted-foreground">
+            06 / Contact
+          </span>
+          <h2 className="section-heading text-3xl md:text-5xl font-extrabold mt-2">
+            Get In Touch
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-xl border-l-4 border-primary pl-4">
+            Whether you have a question, a project proposal, or just want to say hi — my inbox is always open.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Info */}
+          {/* Left — contact links */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="space-y-4"
           >
-            <div className="space-y-6">
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-full text-primary">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground font-medium mb-1">Email</p>
-                    <a href="mailto:hemanthsaiworks@gmail.com" className="text-lg font-medium hover:text-primary transition-colors">
-                      hemanthsaiworks@gmail.com
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                <CardContent className="p-6 flex items-center gap-4">
-                  <div className="p-3 bg-primary/10 rounded-full text-primary">
-                    <Linkedin className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground font-medium mb-1">LinkedIn</p>
-                    <a href="https://www.linkedin.com/in/hemanthsai-katuri-91b72925a/" target="_blank" className="text-lg font-medium hover:text-primary transition-colors">
-                      Hemanthsai Katuri
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <div className="flex gap-4 pt-4">
-                <Button variant="outline" size="lg" asChild className="flex-1 gap-2">
-                  <Link href="https://github.com/hemanthsaikaturi" target="_blank">
-                    <Github className="w-5 h-5" />GitHub
-                  </Link>
-                </Button>
-                <Button variant="default" size="lg" asChild className="flex-1 gap-2">
-                  <Link href="/Hemanth_Resume_Master.pdf" target="_blank">
-                    <Download className="w-5 h-5" />Resume
-                  </Link>
-                </Button>
+            {/* Email card */}
+            <a
+              href="mailto:hemanthsaiworks@gmail.com"
+              className="brutalist-card flex items-center gap-4 p-5 bg-card group"
+            >
+              <div className="accent-box p-3 shrink-0">
+                <Mail className="w-5 h-5" />
               </div>
+              <div>
+                <p className="font-mono text-xs font-bold tracking-widest uppercase text-muted-foreground mb-0.5">Email</p>
+                <p className="font-display font-bold text-base group-hover:text-primary transition-colors">
+                  hemanthsaiworks@gmail.com
+                </p>
+              </div>
+            </a>
+
+            {/* LinkedIn card */}
+            <a
+              href="https://www.linkedin.com/in/hemanthsaikaturi/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="brutalist-card flex items-center gap-4 p-5 bg-card group"
+            >
+              <div className="accent-box p-3 shrink-0">
+                <Linkedin className="w-5 h-5" />
+              </div>
+              <div>
+                <p className="font-mono text-xs font-bold tracking-widest uppercase text-muted-foreground mb-0.5">LinkedIn</p>
+                <p className="font-display font-bold text-base group-hover:text-primary transition-colors">
+                  Hemanthsai Katuri
+                </p>
+              </div>
+            </a>
+
+            {/* Action buttons */}
+            <div className="flex gap-3 pt-2">
+              <Link
+                href="https://github.com/hemanthsaikaturi"
+                target="_blank"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 border-2 border-border font-bold text-sm hover:bg-foreground hover:text-background hover:border-foreground transition-colors duration-150"
+              >
+                <Github className="w-4 h-4" /> GitHub
+              </Link>
+              <Link
+                href="/Hemanth_Resume_Master.pdf"
+                target="_blank"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-foreground text-background border-2 border-foreground font-bold text-sm hover:bg-primary hover:border-primary hover:text-primary-foreground transition-colors duration-150"
+              >
+                <Download className="w-4 h-4" /> Resume
+              </Link>
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Right — form */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.4, delay: 0.2 }}
           >
-            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-              <CardContent className="p-6 md:p-8">
-                <form className="space-y-6" onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Name</Label>
-                      <Input 
-                        id="name" 
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="John Doe" 
-                        className="bg-background/50" 
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="john@example.com" 
-                        className="bg-background/50" 
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input 
-                      id="subject" 
-                      value={formData.subject}
+            <div className="brutalist-card bg-card p-8">
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label htmlFor="name" className={labelClass}>Name</label>
+                    <input
+                      id="name"
+                      className={inputClass}
+                      placeholder="John Doe"
+                      value={formData.name}
                       onChange={handleChange}
                       required
-                      placeholder="Project Inquiry" 
-                      className="bg-background/50" 
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea 
-                      id="message" 
-                      value={formData.message}
+                  <div>
+                    <label htmlFor="email" className={labelClass}>Email</label>
+                    <input
+                      id="email"
+                      type="email"
+                      className={inputClass}
+                      placeholder="john@example.com"
+                      value={formData.email}
                       onChange={handleChange}
                       required
-                      placeholder="Hello Hemanth, I'd like to discuss..." 
-                      className="min-h-[150px] bg-background/50" 
                     />
                   </div>
-                  <Button 
-                    type="submit" 
-                    size="lg"
-                    disabled={status === "loading" || status === "success"}
-                    className="w-full gap-2"
-                  >
-                    {status === "loading" ? (
-                      "Sending..."
-                    ) : status === "success" ? (
-                      <><CheckCircle2 className="w-4 h-4" />Message Sent!</>
-                    ) : status === "error" ? (
-                      <><AlertCircle className="w-4 h-4" />Failed to send. Try again.</>
-                    ) : (
-                      <><Send className="w-4 h-4" />Send Message</>
-                    )}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                </div>
+                <div>
+                  <label htmlFor="subject" className={labelClass}>Subject</label>
+                  <input
+                    id="subject"
+                    className={inputClass}
+                    placeholder="Project Inquiry"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className={labelClass}>Message</label>
+                  <textarea
+                    id="message"
+                    className={`${inputClass} min-h-[140px] resize-none`}
+                    placeholder="Hello Hemanth, I'd like to discuss..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={status === "loading" || status === "success"}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-foreground text-background border-2 border-foreground font-display font-bold text-sm uppercase tracking-widest hover:bg-primary hover:border-primary hover:text-primary-foreground disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-150"
+                >
+                  {status === "loading" ? (
+                    "Sending..."
+                  ) : status === "success" ? (
+                    <><CheckCircle2 className="w-4 h-4" /> Message Sent!</>
+                  ) : status === "error" ? (
+                    <><AlertCircle className="w-4 h-4" /> Failed — Try Again</>
+                  ) : (
+                    <><Send className="w-4 h-4" /> Send Message</>
+                  )}
+                </button>
+              </form>
+            </div>
           </motion.div>
         </div>
       </div>

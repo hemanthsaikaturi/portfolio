@@ -4,61 +4,81 @@ import { Github, Linkedin } from "@/components/icons";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-card text-card-foreground">
+    <footer className="border-t-4 border-foreground bg-foreground text-background">
       <div className="container mx-auto px-4 md:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold tracking-tighter mb-4">
-              Hemanthsai Katuri
-            </h2>
-            <p className="text-muted-foreground max-w-sm">
-              Full Stack Developer, Embedded Systems Engineer & FPGA Enthusiast building scalable platforms and hardware-software systems.
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <div className="inline-block border-2 border-background px-3 py-1 mb-4">
+              <span className="font-display font-extrabold text-2xl tracking-tighter">HK</span>
+            </div>
+            <p className="text-background/70 text-sm max-w-xs leading-relaxed font-mono">
+              Full Stack Developer, Embedded Systems Engineer &amp; FPGA Enthusiast building scalable platforms and hardware-software systems.
             </p>
           </div>
-          
+
+          {/* Links */}
           <div>
-            <h3 className="font-semibold mb-4">Links</h3>
+            <h3 className="font-display font-bold text-xs tracking-widest uppercase mb-5 text-background/50">
+              Navigate
+            </h3>
             <ul className="space-y-2">
-              <li>
-                <Link href="#home" className="text-sm text-muted-foreground hover:text-primary transition-colors">Home</Link>
-              </li>
-              <li>
-                <Link href="#projects" className="text-sm text-muted-foreground hover:text-primary transition-colors">Projects</Link>
-              </li>
-              <li>
-                <Link href="#publications" className="text-sm text-muted-foreground hover:text-primary transition-colors">Publications</Link>
-              </li>
-              <li>
-                <Link href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
-              </li>
+              {[
+                { label: "Home", href: "#home" },
+                { label: "Projects", href: "#projects" },
+                { label: "Experience", href: "#experience" },
+                { label: "Publications", href: "#publications" },
+                { label: "Contact", href: "#contact" },
+              ].map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="text-sm text-background/70 hover:text-background font-mono transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Connect */}
           <div>
-            <h3 className="font-semibold mb-4">Connect</h3>
-            <div className="flex gap-4">
-              <Link href="https://github.com/hemanthsaikaturi" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
-                <Github className="w-5 h-5" />
-                <span className="sr-only">GitHub</span>
+            <h3 className="font-display font-bold text-xs tracking-widest uppercase mb-5 text-background/50">
+              Connect
+            </h3>
+            <div className="flex flex-col gap-3">
+              <Link
+                href="https://github.com/hemanthsaikaturi"
+                target="_blank"
+                className="flex items-center gap-2 text-sm text-background/70 hover:text-background font-mono transition-colors"
+              >
+                <Github className="w-4 h-4" /> hemanthsaikaturi
               </Link>
-              <Link href="https://www.linkedin.com/in/hemanthsai-katuri-91b72925a/" target="_blank" className="text-muted-foreground hover:text-primary transition-colors">
-                <Linkedin className="w-5 h-5" />
-                <span className="sr-only">LinkedIn</span>
+              <Link
+                href="https://www.linkedin.com/in/hemanthsaikaturi/"
+                target="_blank"
+                className="flex items-center gap-2 text-sm text-background/70 hover:text-background font-mono transition-colors"
+              >
+                <Linkedin className="w-4 h-4" /> hemanthsaikaturi
               </Link>
-              <Link href="mailto:hemanthsaiworks@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
-                <Mail className="w-5 h-5" />
-                <span className="sr-only">Email</span>
+              <Link
+                href="mailto:hemanthsaiworks@gmail.com"
+                className="flex items-center gap-2 text-sm text-background/70 hover:text-background font-mono transition-colors"
+              >
+                <Mail className="w-4 h-4" /> hemanthsaiworks@gmail.com
               </Link>
             </div>
           </div>
         </div>
-        
-        <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
+
+        {/* Bottom bar */}
+        <div className="mt-10 pt-6 border-t border-background/20 flex flex-col md:flex-row items-center justify-between gap-3">
+          <p className="text-xs text-background/50 font-mono">
             © {new Date().getFullYear()} Hemanthsai Katuri. All rights reserved.
           </p>
-          <p className="text-sm text-muted-foreground">
-            Built with Next.js & Tailwind CSS
+          <p className="text-xs text-background/50 font-mono">
+            Built with Next.js + Tailwind CSS + Framer Motion
           </p>
         </div>
       </div>

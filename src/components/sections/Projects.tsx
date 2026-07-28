@@ -2,128 +2,140 @@
 
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-import { Badge } from "../ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Button } from "../ui/button";
 import Link from "next/link";
 
 const projects = [
   {
+    num: "01",
     title: "Hybrid Genetic Algorithm Framework for FPGA CNN Accelerators",
-    description: "Developed a memory-aware optimization framework for FPGA-based CNN accelerators using Hybrid Genetic Algorithms and HLS directives. Implemented parameterized MAC-array and Conv2D accelerator models and automated synthesis evaluation workflows for latency, DSP, LUT, BRAM, and timing analysis.",
+    description:
+      "Memory-aware optimization framework for FPGA-based CNN accelerators using Hybrid Genetic Algorithms and HLS directives. Parameterized MAC-array and Conv2D models with automated synthesis evaluation for latency, DSP, LUT, BRAM, and timing.",
     tech: ["Xilinx Vitis HLS", "Verilog", "FPGA", "CNN", "Genetic Algorithms"],
-    links: {}
+    label: null,
+    links: {},
   },
   {
+    num: "02",
     title: "Learnable Universal Remote Architecture",
-    description: "Designed and implemented a programmable universal IR remote supporting both standard and unknown IR protocols using ATmega328P with EEPROM-based persistent storage and runtime IR learning capabilities.",
-    tech: ["ATmega328P", "Arduino", "EEPROM", "IRremote"],
-    publication: "Published in IEEE Xplore.",
-    links: {}
+    description:
+      "Programmable universal IR remote supporting standard and unknown IR protocols using ATmega328P, with EEPROM-based persistent storage, NEC/raw signal decoding, and runtime IR learning capabilities.",
+    tech: ["ATmega328P", "Arduino", "EEPROM", "IRremote", "C/C++"],
+    label: "IEEE Published",
+    links: {},
   },
   {
+    num: "03",
     title: "Svadhyay LMS",
-    description: "Architected and developed a custom Learning Management System serving 390+ students with role-based dashboards, secure authentication, automated PDF certificate generation, and scalable email notification systems.",
+    description:
+      "Custom Learning Management System serving 390+ students with role-based dashboards, secure Supabase auth, automated PDF certificate generation, and scalable email notification systems.",
     tech: ["Next.js", "React", "Tailwind CSS", "Supabase", "PostgreSQL"],
-    links: {
-      live: "https://svadhyay.ieeevbitsb.in/"
-    }
+    label: null,
+    links: { live: "https://svadhyay.ieeevbitsb.in/" },
   },
   {
-    title: "IEEE - VBIT Student Branch Website",
-    description: "Re-engineered and deployed the official IEEE - VBIT Student Branch website to improve scalability, responsiveness, and overall website performance. Implemented Technical SEO enhancements and achieved Lighthouse performance score of 92.",
+    num: "04",
+    title: "IEEE-VBIT Student Branch Website",
+    description:
+      "Re-engineered official IEEE-VBIT website for scalability, responsiveness, and SEO. Achieved Lighthouse performance score of 92 through optimized rendering and Core Web Vitals improvements.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS", "PHP", "MySQL"],
-    links: {
-      live: "https://ieeevbitsb.in/"
-    }
+    label: null,
+    links: { live: "https://ieeevbitsb.in/" },
   },
   {
+    num: "05",
     title: "Dynamic Event Registration Portal",
-    description: "Developed a full-stack event registration system with secure admin dashboards, payment integration, automated attendee management, and Firestore-to-Google Sheets synchronization workflows.",
+    description:
+      "Full-stack event registration system with secure admin dashboards, Razorpay payment integration, automated attendee management, and Firestore-to-Google Sheets synchronization.",
     tech: ["JavaScript", "Firebase", "Razorpay", "Google Apps Script"],
-    links: {
-      live: "https://registration.ieeevbitsb.in/"
-    }
-  }
+    label: null,
+    links: { live: "https://registration.ieeevbitsb.in/" },
+  },
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 }
-  }
-};
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 bg-muted/30">
+    <section id="projects" className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-8">
+        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.4 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Featured Projects</h2>
-          <div className="h-1 w-20 bg-primary rounded-full"></div>
+          <span className="font-mono text-xs font-bold tracking-widest uppercase text-muted-foreground">
+            01 / Projects
+          </span>
+          <h2 className="section-heading text-3xl md:text-5xl font-extrabold mt-2">
+            Featured Work
+          </h2>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        {/* Project grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-l-2 border-t-2 border-border">
           {projects.map((project, index) => (
-            <motion.div key={index} variants={itemVariants} className="h-full">
-              <Card className="h-full flex flex-col bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/50 transition-colors duration-300">
-                <CardHeader>
-                  <CardTitle className="text-xl leading-tight">{project.title}</CardTitle>
-                  {project.publication && (
-                    <CardDescription className="text-primary font-medium mt-2">
-                      {project.publication}
-                    </CardDescription>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.4, delay: index * 0.07 }}
+              whileHover={{ rotateY: 2, rotateX: -1, scale: 1.01 }}
+              style={{ transformPerspective: 800 }}
+              className="group border-r-2 border-b-2 border-border bg-card hover:bg-muted/30 transition-colors duration-200 flex flex-col"
+            >
+              <div className="p-6 flex-1 flex flex-col">
+                {/* Number + label row */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-display font-extrabold text-4xl text-border/30 leading-none select-none">
+                    {project.num}
+                  </span>
+                  {project.label && (
+                    <span className="accent-box text-[10px] font-mono font-bold tracking-widest uppercase px-2 py-0.5">
+                      {project.label}
+                    </span>
                   )}
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="bg-secondary/50 hover:bg-secondary/80">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-                <CardFooter className="pt-4 border-t border-border/50 flex gap-3">
-                  {project.links.live && (
-                    <Button size="sm" variant="default" asChild className="gap-2">
-                      <Link href={project.links.live} target="_blank">
-                        <ExternalLink className="w-4 h-4" /> Live Site
-                      </Link>
-                    </Button>
-                  )}
-                </CardFooter>
-              </Card>
+                </div>
+
+                {/* Title */}
+                <h3 className="font-display font-bold text-lg leading-tight mb-3 group-hover:text-primary transition-colors">
+                  {project.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-sm text-muted-foreground leading-relaxed mb-5 flex-1">
+                  {project.description}
+                </p>
+
+                {/* Tech tags */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {project.tech.map((t) => (
+                    <span
+                      key={t}
+                      className="mono-tag text-[10px]"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Footer */}
+              {project.links.live && (
+                <div className="border-t-2 border-border p-4">
+                  <Link
+                    href={project.links.live}
+                    target="_blank"
+                    className="inline-flex items-center gap-2 text-xs font-bold font-mono uppercase tracking-widest hover:text-primary transition-colors"
+                  >
+                    Live Site <ExternalLink className="w-3 h-3" />
+                  </Link>
+                </div>
+              )}
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
